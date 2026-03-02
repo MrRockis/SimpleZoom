@@ -1,5 +1,7 @@
 package com.mrrockis.simplezoom;
 
+import net.minecraft.util.Mth;
+
 public class CommonClass {
     private static double zoomLevel;
 
@@ -24,7 +26,7 @@ public class CommonClass {
         else if (delta < 0)
             zoomLevel *= 0.9;
 
-        zoomLevel = Math.clamp(zoomLevel, 1, 50);
+        zoomLevel = Mth.clamp(zoomLevel, 1, 50);
     }
 
     public static float getZoomFieldOfView(float fov) {

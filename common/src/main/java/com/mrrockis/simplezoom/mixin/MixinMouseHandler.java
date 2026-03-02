@@ -24,8 +24,8 @@ public class MixinMouseHandler {
         CommonClass.handleMouseScroll(vertical);
     }
 
-    @Inject(method = "turnPlayer(D)V", at = @At("HEAD"))
-    private void applyZoomSensitivity(double movementTime, CallbackInfo ci) {
+    @Inject(method = "turnPlayer()V", at = @At("HEAD"))
+    private void applyZoomSensitivity(CallbackInfo ci) {
         if (Constants.TOGGLE_KEY.isDown()) {
             this.accumulatedDX /= CommonClass.getZoomLevel();
             this.accumulatedDY /= CommonClass.getZoomLevel();
@@ -35,12 +35,12 @@ public class MixinMouseHandler {
     @Redirect(method = "onScroll(JDD)V",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/player/Inventory;setSelectedSlot(I)V"
+                    target = "Lnet/minecraft/world/entity/player/Inventory;swapPaint(D)V"
             )
     )
-    private void canScrollInventory(Inventory inventory, int slot) {
+    private void canScrollInventory(Inventory inventory, double direction) {
         if (!Constants.TOGGLE_KEY.isDown()) {
-            inventory.setSelectedSlot(slot);
+            inventory.swapPaint(direction);
         }
     }
 }

@@ -11,14 +11,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(GameRenderer.class)
 public class MixinGameRenderer {
-    @Inject(method = "getFov(Lnet/minecraft/client/Camera;FZ)F",
+    @Inject(method = "getFov(Lnet/minecraft/client/Camera;FZ)D",
             at = @At(value = "RETURN", ordinal = 1),
             cancellable = true
     )
     private void getFieldOfView(Camera camera, float tickDelta, boolean changingFov,
-                                CallbackInfoReturnable<Float> cir) {
+                                CallbackInfoReturnable<Double> cir) {
         if (Constants.TOGGLE_KEY.isDown()) {
-            cir.setReturnValue(CommonClass.getZoomFieldOfView(cir.getReturnValueF()));
+            float original = (float) cir.getReturnValueD();
+            cir.setReturnValue((double)CommonClass.getZoomFieldOfView(original));
         } else {
             CommonClass.resetZoomLevel();
         }

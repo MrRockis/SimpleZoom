@@ -13,8 +13,7 @@ public class Constants {
     public static final String MOD_NAME = "Simple Zoom";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
-    public static final KeyMapping.Category KEY_CATEGORY =
-            new KeyMapping.Category(ResourceLocation.fromNamespaceAndPath("simplezoom", "main"));
+    public static final String KEY_CATEGORY = "key.category.simplezoom.main";
 
     public static final KeyMapping TOGGLE_KEY = new KeyMapping(
             "key.simplezoom.toggle",
