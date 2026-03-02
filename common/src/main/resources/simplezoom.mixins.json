@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.mrrockis.simplezoom.mixin",
+  "compatibilityLevel": "JAVA_18",
+  "mixins": [],
+  "client": [
+    "MixinGameRenderer",
+    "MixinMouseHandler"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
