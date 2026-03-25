@@ -18,13 +18,13 @@ public class MixinMouseHandler {
     @Shadow
     private double accumulatedDY;
 
-    @Inject(at = @At("RETURN"), method = "onScroll(JDD)V")
+    @Inject(at = @At("RETURN"), method = "onScroll(JDD)V", remap = false)
     private void onMouseScroll(long window, double horizontal,
                                double vertical, CallbackInfo ci) {
         CommonClass.handleMouseScroll(vertical);
     }
 
-    @Inject(method = "turnPlayer(D)V", at = @At("HEAD"))
+    @Inject(method = "turnPlayer(D)V", at = @At("HEAD"), remap = false)
     private void applyZoomSensitivity(double movementTime, CallbackInfo ci) {
         if (Constants.TOGGLE_KEY.isDown()) {
             this.accumulatedDX /= CommonClass.getZoomLevel();
