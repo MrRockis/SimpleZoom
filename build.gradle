@@ -3,4 +3,73 @@ plugins {
     id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT' apply false
     // see https://projects.neoforged.net/neoforged/moddevgradle for new versions
     id 'net.neoforged.moddev' version '2.0.141' apply false
+    id 'me.modmuss50.mod-publish-plugin' version '2.0.0'
+}
+
+publishMods {
+    changelog = file("changelog.md").text
+    type = STABLE
+
+    // CurseForge options used by both Fabric and Forge
+    def cfOptions = curseforgeOptions {
+        accessToken = providers.gradleProperty("CURSEFORGE_TOKEN")
+        projectId = "1454908"
+        minecraftVersions.add(minecraft_version)
+        client = true;
+    }
+
+    // Modrinth options used by both Fabric and Forge
+    def mrOptions = modrinthOptions {
+        accessToken = providers.gradleProperty("MODRINTH_TOKEN")
+        projectId = "EYKTeOIO"
+        minecraftVersions.add(minecraft_version)
+    }
+
+    // Fabric specific options for CurseForge
+    curseforge("curseforgeFabric") {
+        from cfOptions
+        file project(":fabric")
+        modLoaders.add("fabric")
+        requires {
+            slug = "fabric-api"
+        }
+    }
+
+    // Forge specific options for CurseForge
+    curseforge("curseforgeForge") {
+        from cfOptions
+        file project(":forge")
+        modLoaders.add("forge")
+    }
+
+    // NeoForge specific options for CurseForge
+    curseforge("curseforgeNeoForge") {
+        from cfOptions
+        file project(":neoforge")
+        modLoaders.add("neoforge")
+    }
+
+    // Fabric specific options for Modrinth
+    modrinth("modrinthFabric") {
+        from mrOptions
+        file project(":fabric")
+        modLoaders.add("fabric")
+        requires {
+            slug = "fabric-api"
+        }
+    }
+
+    // Forge specific options for Modrinth
+    modrinth("modrinthForge") {
+        from mrOptions
+        file project(":forge")
+        modLoaders.add("forge")
+    }
+
+    // NeoForge specific options for Modrinth
+    modrinth("modrinthNeoForge") {
+        from mrOptions
+        file project(":neoforge")
+        modLoaders.add("neoforge")
+    }
 }
